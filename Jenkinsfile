@@ -1,6 +1,6 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/damodaranj/my-app.git'
+     git 'https://github.com/premkumarse/my-app.git'
    }
    stage('Compile-Package'){
 
@@ -9,18 +9,18 @@ node{
 	  sh 'mv target/myweb*.war target/newapp.war'
    }
    stage('Build Docker Imager'){
-   sh 'docker build -t saidamo/myweb:0.0.2 .'
+   sh 'docker build -t premkumar7528/myweb:0.0.2 .'
    }
    stage('Docker Image Push'){
-   withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
-   sh "docker login -u saidamo -p ${dockerPassword}"
+   withCredentials([string(credentialsId: 'dockerName', variable: 'dockerPassword')]) {
+   sh "docker login -u premkumar7528 -p ${dockerPassword}"
     }
-   sh 'docker push saidamo/myweb:0.0.2'
+   sh 'docker push premkumar7528/myweb:0.0.2'
    }
    stage('Nexus Image Push'){
-   sh "docker login -u admin -p admin123 15.206.90.217:8083"
-   sh "docker tag saidamo/myweb:0.0.2 15.206.90.217:8083/damo:1.0.0"
-   sh 'docker push 15.206.90.217:8083/damo:1.0.0'
+   sh "docker login -u admin -p admin123 13.232.88.96:8083"
+   sh "docker tag premkumar7528/myweb:0.0.2 13.232.88.96:8083/damo:1.0.0"
+   sh 'docker push 13.232.88.96:8083/damo:1.0.0'
    }
     stage('Remove Previous Container'){
 	try{
